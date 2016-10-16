@@ -1,0 +1,16 @@
+services:
+    eene.form.registration:
+        class: EENE\UserBundle\Form\RegistrationType
+        tags:
+            - { name: form.type, alias: eene_user_registration }
+    eene_user.form.handler.registration:
+        class: EENE\UserBundle\Form\Handler\RegistrationFormHandler
+        arguments: ["@fos_user.registration.form", "@request", "@fos_user.user_manager", "@fos_user.mailer", "@fos_user.util.token_generator"]
+        scope: request
+        public: false
+    eene_user.form.profile:
+        class: EENE\UserBundle\Form\Type\ProfileFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: eene_user_profile }
+   

@@ -1,0 +1,23 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<div   class="box">
+   <div class="col-md-offset-2 col-md-8">
+			  	 <div class="panel panel-primary" >
+					  <div class="panel-heading">My profile</div>
+   					 <div class="panel-body">
+         <table class="table table-bordered" >
+        <tr><td><b>First name</b> </td><td>{{ user.firstname }}</td></tr>
+        <tr><td><b>Last Name</b> </td><td>{{ user.lastname }}</td></tr>
+        <tr><td><b>Email</b></td><td> {{ user.email }}</td></tr>
+         <tr><td><b>Username</b></td><td> {{ user.username }}</td></tr>
+        <tr><td><b>Organization</b></td><td> {{ user.organization }}</td></tr>
+        <tr><td><b>Country</b></td><td> {{ user.country }}</td></tr>
+       </table>
+   
+           <div align="center"  class="box">
+             <a class="btn btn-primary signup" href="{{ path('fos_user_profile_edit') }}">Modifiy</a>
+             </div>
+    </div>       
+   </div>
+ </div>
+</div>

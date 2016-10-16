@@ -1,0 +1,12 @@
+{% extends "::base.html.twig" %}
+{% block title %}Resetting{% endblock %}
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block eene_user_content %}
+<div align="center" class="box">
+    <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+<p>
+{{ 'resetting.check_email'|trans({'%email%': email}) }}
+</p>
+</div>
+{% endblock eene_user_content %}

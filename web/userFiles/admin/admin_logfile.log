@@ -1,0 +1,71 @@
+At 2016-09-02 20:40:29
+Username: admin
+Created Entity(ies)
+
+Create Entity with Id: 2478, Label: Barclays
+Create Entity with Id: 2479, Label: Barclays
+Create Entity with Id: 2480, Label: Barclays
+Create Entity with Id: 2481, Label: Barclays
+Create Entity with Id: 2482, Label: Barclays
+Create Entity with Id: 2483, Label: Sheikh Mansour
+Create Entity with Id: 2484, Label: Sheikh Mansour
+Create Entity with Id: 2485, Label: Abu Dhabi
+Create Entity with Id: 2486, Label: Abu Dhabi
+Create Entity with Id: 2487, Label: BBC
+Create Entity with Id: 2488, Label: BBC
+Create Entity with Id: 2489, Label: Lloyds TSB
+Create Entity with Id: 2490, Label: government bailout
+Create Entity with Id: 2491, Label: Manchester City
+Create Entity with Id: 2492, Label: RBS
+Create Entity with Id: 2493, Label: Qatar
+Create Entity with Id: 2494, Label: the deal
+
+Geolocating Entity(ies)
+
+Entity Id: 2483
+Trying to geolocate: Sheikh Mansour
+NERD type: Person
+Extractor: alchemyapi
+Text position: 198
+URI: http://dbpedia.org/resource/Mansour_bin_Zayed_Al_Nahyan
+Calling DBpedia... Response: notGeocodable 
+
+Entity Id: 2484
+Trying to geolocate: Sheikh Mansour
+NERD type: Person
+Extractor: alchemyapi
+Text position: 726
+URI: http://dbpedia.org/resource/Mansour_bin_Zayed_Al_Nahyan
+Calling DBpedia... Response: notGeocodable 
+
+Entity Id: 2486
+Trying to geolocate: Abu Dhabi
+NERD type: Location
+Extractor: alchemyapi
+Text position: 367
+URI: http://www.abudhabi.ae/
+Calling Geonames... Response: POINT(54.36667 24.46667)
+
+Entity Id: 2491
+Trying to geolocate: Manchester City
+NERD type: Location
+Extractor: alchemyapi
+Text position: 176
+URI: Not defined
+Calling Geonames... Response: POINT(-2.38944 53.47119)
+
+Entity Id: 2492
+Trying to geolocate: RBS
+NERD type: Organization
+Extractor: alchemyapi
+Text position: 462
+URI: http://dbpedia.org/resource/The_Royal_Bank_of_Scotland
+Calling DBpedia... Response: notGeocodable 
+
+Entity Id: 2493
+Trying to geolocate: Qatar
+NERD type: Location
+Extractor: alchemyapi
+Text position: 657
+URI: http://dbpedia.org/resource/Qatar
+Calling DBpedia... Response: POINT(51.516666412354 25.299999237061) 

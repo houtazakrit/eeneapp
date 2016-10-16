@@ -1,0 +1,88 @@
+easy_admin:
+    list_actions: ['show', 'edit', 'delete']
+    site_name: 'EENE Admin'
+    formats:
+        date:     'd/m/Y'
+        time:     'H:i'
+        datetime: 'd/m/Y H:i:s'
+    entities:
+        User:
+            class: EENE\UserBundle\Entity\User
+            label: 'Users'
+            roles: [ROLE_VIEWER] 
+            list:
+                title: '%%entity_name%% listing'
+          #      fields: ['username', 'email', 'name', 'firstname', 'last_login', 'password_requested_at', 'enabled', 'locked']
+                fields:
+                  - username
+                  - email
+                  - { property: 'firstname', label: 'First name' }
+                  - { property: 'lastname', label: 'Last name' }
+                  - { property: 'last_login', type: 'datetime', label: 'Last login' }
+                  - enabled
+                  - locked
+                actions: 
+                   - { name: 'show', icon: 'eye', label:false}
+                   - { name: 'edit', icon: 'pencil', label:false}  
+                   - { name: 'delete', icon: 'trash', label:false}
+            edit:
+                title:  'Edit user'
+                fields: 
+                   - email
+                   - username
+                   - { property: 'firstname', label: 'First name' }
+                   - { property: 'lastname', label: 'Last name' }
+                   - { property: 'organization', label: 'Organization' }
+                   - { property: 'country', label: 'Country' }
+                 #  - { property: 'plainPassword', type: 'password', 'label': 'New password' }
+                   - roles
+                   - enabled
+                   - locked
+            show:
+                title:  'Show user'
+                fields: 
+                   - id
+                   - email
+                   - username
+                   - { property: 'firstname', label: 'First name' }
+                   - { property: 'lastname', label: 'Last name' }
+                   - { property: 'organization', label: 'Organization' }
+                   - { property: 'country', label: 'Country' }
+                   - { property: 'last_login', type: 'datetime', label: 'Last login' }
+                   - { property: 'password_requested_at', type: 'datetime', label: 'Password requested at' }
+                   - roles
+                   - enabled
+                   - locked
+            new:
+                title:  'Add user'
+                fields: 
+                   - email
+                   - username
+                   - { property: 'plainPassword', type: 'password', 'label': 'Password' }
+                   - { property: 'firstname', label: 'First name'}
+                   - { property: 'lastname', label: 'Last name' }
+                   - { property: 'organization', label: 'Organization' }
+                   - { property: 'country', label: 'Country' }
+                   - { property: 'roles', label: 'Roles'}
+                   - enabled
+                   - locked
+                form_options: { validation_groups: ['Default', 'Registration'] }
+            form:
+                type: EENE\UserBundle\Form\RegistrationType
+               # form_options: { validation_groups: ['Default', 'Registration'] }
+    design:
+        menu:
+            - { entity: 'User', icon: 'user' , label: 'users', title: 'user'} 
+        brand_color: '#1ABC9C'
+        color_scheme: 'light'
+      #  templates:
+          #  label_null: 'UserBundle:Default:labels/null.html.twig'
+            # namespace syntax works too:
+            # label_null: '@App/Default/labels/null.html.twig'
+      #  assets:
+         #   css:
+                # HTTP protocol-relative URL
+              #  - '//example.org/css/admin1.css'
+         #   js:
+                # this option works exactly the same as the 'css' option
+              #  - '//example.org/js/admin1.js'

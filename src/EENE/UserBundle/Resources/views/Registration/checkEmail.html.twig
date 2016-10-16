@@ -1,0 +1,9 @@
+{% extends "::base.html.twig" %}
+{% block title %}Register{% endblock %}
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block eene_user_content %}
+    <p>{{ 'registration.check_email'|trans({'%email%': user.email}) }}</p>
+    <p>This email may take several minutes. Please also have a look in your spam directory.</p>
+    <p></p>
+{% endblock eene_user_content %}

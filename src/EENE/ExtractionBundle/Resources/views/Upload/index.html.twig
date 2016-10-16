@@ -1,0 +1,104 @@
+{% extends "UserBundle::layout.html.twig" %}
+{% block title %}Upload files{% endblock %}
+{% block eene_user_content %}
+<!-- /.modal-dialog for success uploading Text or JSON File  -->
+<div class="modal fade" id="modaluploadSuccess" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+           </button>
+         <h4 class="modal-title">Files uploaded</h4>
+      </div>
+      <div class="modal-body">
+        <p>Upload success </p>
+      </div>
+      <div class="modal-footer">
+       
+        <a class="btn btn-primary" href="{{ path('user_myfiles') }}" >Close</a>
+        <a class="btn btn-primary" href="{{ path('eene_viewlogfile')}}">View log file</a>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<!-- /.modal-dialog for uploading Text and JSON File  -->
+<div class="modal fade" id="modalErroruploadTextJson" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+           </button>
+         <h4 class="modal-title">Error</h4>
+      </div>
+      <div class="modal-body">
+        <p>Upload cancelled: at least one uploaded file with the same filename already exists.
+        Please repeat the upload process.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- /.modal-dialog for uploading JSON File  -->
+<div class="modal fade" id="modalErroruploadJson" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+           </button>
+         <h4 class="modal-title">Error</h4>
+      </div>
+      <div class="modal-body">
+        <p>Upload cancelled: A NERD JSON file with the same name already exists..
+        Please repeat the upload process.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+ <div class="panel panel-primary">
+       <div class="panel-heading">Upload file(s)</div>
+             <div class="panel-body">
+                <h4>Upload NERD JSON file without their corresponding Text file</h4>
+                <h6>Max Size (1MB), JSON format only</h6>
+                <form action="{{ path('upload_jsonfile') }}" method="post" class="dropzone" id="jsondropzone" enctype="multipart/form-data">
+                      <div class="fallback">
+                        <input name="file" type="file" multiple />
+                      </div>
+                
+                </form>
+            <hr/>
+           
+            <div id="loading-indicator" style="display:none">
+                 <div id="textloading">
+                            
+                                 <b>Analyzing named entities by NERD API...</b> 
+                                 </br>This process may take a few minutes.
+                                 </br></br><img src="{{ asset('img/chargement.gif') }}" alt="chargement"/>
+                   </div>
+            </div>
+                  
+            <h4>Upload a Text file with its corresponding NERD JSON file</h4>
+             <h6>Max Size (2x1MB), JSON/Text format only</h6>
+                <form action="{{ path('upload_textjsonfile') }}" name="upload" method="post" class="dropzone" id="txtjsondropzone" enctype="multipart/form-data">
+            
+               <div class="fallback">
+            
+                <input name="file" type="file" multiple />
+               </div>
+               
+               <button id="submit-all" class="btn btn-info"><span class="glyphicon glyphicon-upload"> Upload</span></button>
+               
+               </form>	
+            </div>
+            </div>
+       {% endblock %}
+{% block javascripts %}
+{% endblock %}

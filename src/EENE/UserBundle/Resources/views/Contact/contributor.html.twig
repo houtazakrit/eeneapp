@@ -1,0 +1,51 @@
+{# tester si l'utilisateur est connecté #}
+{% extends app.user 
+    ? "UserBundle::layout.html.twig" 
+    : "::base.html.twig" %}
+{% block title %}Contributors{% endblock %}
+{% block eene_user_content %}
+
+    <div class="row">
+                  		<div class="col-md-offset-2 col-md-8">
+            			  	 <div class="panel panel-primary" >
+            					  <div class="panel-heading">Contributors</div>
+            					    <div class="panel-body">
+            					        
+            					        {%  if not app.user %}
+            					           <center> 
+            					             <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}
+            					               </a>
+            					            </center>
+            					         {%  endif %}
+                                        <table class="table">
+                                         <tbody>
+                                         <tr>
+                                            <td> <img src="{{ asset('img/photo_hafid.png') }}"/></td>
+                                           <td> 
+                                                <p> Hafid OUTAZAKRIT</p>
+                                                <p>h.outazakrit[at]gmail.com</p>
+                                                <p>April-July 2016</p>
+                                                <p><a href="http://odf.univ-paris13.fr/fr/offre-de-formation/feuilleter-le-catalogue-2015-2016/sciences-technologies-sante-STS/master-lmd-XB/master-mention-informatique-specialite-exploration-informatique-des-donnees-et-decisionnel-program-gi4ei2d-116-2.html" target="_blank">Master M2 EID2</a></p>
+                                           </td>
+                                          </tr>
+                                         </tbody>
+                                        </table>
+                            <center>
+                             <p>
+                             <a href="http://www.univ-pau.fr" target="_blank" >
+                            Université de Pau et des Pays de l'Adour (UPPA)</a>
+                            </p>
+        
+                         <p>
+                        <a href="http://liuppa.univ-pau.fr" target="_blank" >
+                            Laboratoire Informatique de l'Université de Pau et des Pays de l'Adour (LIUPPA)</a>
+                           </p><p>
+                        <a href="http://erozate.iutbayonne.univ-pau.fr/t2i/" target="_blank" >T2i team</a>
+                        </p>
+                        <p>EENE platform relies on <a href="http://nerd.eurecom.fr/" target="_blank">NERD API</a>.</p>
+                      </center>
+             </div>
+         </div>
+         </div>
+    </div>
+{% endblock %}

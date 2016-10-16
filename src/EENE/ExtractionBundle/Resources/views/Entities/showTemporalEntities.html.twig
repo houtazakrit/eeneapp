@@ -1,0 +1,63 @@
+{% extends "UserBundle::layout.html.twig" %}
+{% block title %}Home{% endblock %}
+{% block eene_user_content %}
+
+	<div class="row">
+    <div class="panel panel-primary">
+				  <div class="panel-heading">
+				  	{% if tableEntities|length > 0 %}
+           {{ tableEntities|length  }} '{{ tableEntities[0].entitytype}} entitie(s)' in '{{ tableEntities[0].jsonfilename}}'
+       {% endif %}
+                 </div>
+				   <div class="panel-body">
+           <table id="tableentities"  class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+                 <thead>
+				      <tr>
+				        <th>Entity</th>
+				        <th>Text Position</th>
+				        <th>Extractor</th>
+				        <th>Extractor Type</th>
+				         <th>NERD Type</th>
+				         <th>Time</th>
+				      </tr>
+				</thead>
+				<tbody>
+				{% for entity in tableEntities %}
+				      <tr>
+					     <td>{{ entity.label }}</td>
+					     <td> 
+					       {{ entity.textpos}}
+					     </td>
+					      <td>
+                           {{ entity.extractor}}
+
+				        </td>
+				        <td>
+                       {% set arrayExtractorType = entity.extractorType|split(',') %}
+					        	{% for value in arrayExtractorType%}
+	                                      {{ value}}{% if not loop.last %}, {% endif %}<br />
+	                            {% endfor %}
+
+				        </td>
+				         <td>
+                           {{ entity.nerdType}}
+
+				        </td>
+				        <td></td>
+				      </tr>
+            
+                    {% endfor %}
+               </tbody>
+  
+            </table>
+		    </div>
+		    
+		</div>
+  	</div>
+	
+
+  {% endblock %}
+  {% block javascripts %}
+
+    <script src="{{ asset('') }}"></script> 
+{% endblock %}

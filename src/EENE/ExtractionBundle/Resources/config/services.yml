@@ -1,0 +1,14 @@
+parameters: #les services utilisés
+    geolocation.service.class: EENE\ExtractionBundle\Services\GeolocationService
+    createentities.service.class: EENE\ExtractionBundle\Services\CreateEntitiesService
+    analyzenerd.service.class: EENE\ExtractionBundle\Services\AnalyzeNERDService
+services:
+    geolocation_service:
+            class: %geolocation.service.class%
+            arguments: ['@doctrine.orm.entity_manager', '@service_container']
+    createentities_service:
+            class: %createentities.service.class%
+            arguments: [@doctrine.orm.entity_manager]
+    analyze_nerd_service:
+            class: %analyzenerd.service.class%
+            arguments: [@doctrine.orm.entity_manager]

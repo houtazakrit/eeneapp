@@ -1,0 +1,17 @@
+{% block subject %}
+   Activating your account
+{% endblock %}
+{% block body_text %}
+{% autoescape false %}
+Hello {{ user.username }} !
+
+Welcome to EENE application!
+
+To finish activating your account - please visit {{ confirmationUrl }}
+
+This is an automatically generated email, please do not reply.
+Regards,
+EENE - T2I Team
+{% endautoescape %}
+{% endblock %}
+{% block body_html %}{% endblock %}

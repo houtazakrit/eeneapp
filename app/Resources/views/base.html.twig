@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+       <meta http-equiv="content-language" content="en">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block stylesheets %}{% endblock %}
+
+    <title>EENE::{% block title %}{% endblock %}</title>
+    <!-- styles css -->
+    <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet" />
+   <link href="{{asset('css/dropzone.min.css')}}" rel="stylesheet" />
+   <link href="{{asset('css/basic.min.css')}}" rel="stylesheet" />
+   <link href="{{asset('css/styleeene.css')}}" rel="stylesheet" />
+   <link href="{{asset('css/jquery.dataTables.min.css')}}" rel="stylesheet" />
+    <link href="{{asset('css/dataTables.bootstrap.min.css')}}" rel="stylesheet" />
+   <link href="{{asset('css/font-awesome.min.css')}}" rel="stylesheet" />
+    <link href="{{asset('css/responsive.bootstrap.min.css')}}" rel="stylesheet" />
+    <link href="{{asset('css/bootstrap-theme.min.css')}}" rel="stylesheet" />
+    
+     <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+        <div class="header">
+        <h1>EENE: Extraction & Evaluation of Named Entities</h1>
+        <hr/>
+        </div>
+
+    {% block content %}
+    
+    <div class="container">  
+
+        {% block eene_user_content %}
+        {% endblock %}
+   
+   </div>
+
+    {% endblock %}
+         
+
+         <div class="footer">
+             <hr/>
+                              <p style="position:absolute;width:100%;">   
+                      
+                         <span style="flo:left;">
+                          
+				                     </span>
+				                    <span > 
+				                   
+                         </span> 
+                 </p>
+            <div class="container">
+                         <a style="float:right;" href="{{path('eene_help')}}"> 
+				                        Help 
+				                     </a> 
+				                     <a style="float:left;" href="{{path('eene_contact')}}"> 
+				                       Contact 
+				                     </a> 
+				                      <a style="margin-left: 45%;" href="{{path('eene_contributor')}}"> 
+				                         Contributors 
+                         </a> 
+              </div>
+        </div>
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script> 
+    <script type="text/javascript" src="{{ asset('js/dropzone.js') }}"></script> 
+     <script type="text/javascript" src="{{ asset('js/scripteene.js') }}"></script> 
+    <script type="text/javascript" src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/dataTables.bootstrap.min.js') }}"></script> 
+    <script type="text/javascript" src="{{ asset('js/dataTables.responsive.min.js') }}"></script> 
+     <script type="text/javascript" src="{{ asset('js/responsive.bootstrap.min.js') }}"></script> 
+       <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+       <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
+     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCyM9K0O3czp6eALqg3ptzzLMpzY9Xd8KY"></script>
+
+    {% block javascripts %}
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,231 @@
+<script type="text/javascript">
+   //tableau de tous les marqueurs
+   var markers = [];
+   //variable map
+    var map;
+   //creer un marqueur 
+   //creer l'interaction du marqueur avec label de l'entité selectionnée
+    function createMarker(carte,identity,label,lng,lat,startchar,endchar,nerdtype){
+     //creating the marker
+		   var  marker = new google.maps.Marker({
+                position: new google.maps.LatLng(lat, lng),
+                map: carte,
+                id: identity,
+                title: label+"\n"+ "Text position: "+startchar+"\n"+"NERD Type: "+nerdtype,
+                customInfo: nerdtype
+              });
+
+              //Add marker to the array.
+            markers.push(marker);
+            //add marker event
+            google.maps.event.addListener(marker, 'click', function() {
+                 //annoter le texte
+                  annoterTexte();
+                  //créer les interactions
+                  createInteraction(identity);
+				        });
+    }
+    //annotation des entités du texte
+    function annoterTexte(){
+        
+         {% if textcontent!=null %}  
+              var result = new String(); 
+              //Creating the text
+	             var text=$("#contenttextfile").text();
+            var i=0;
+              {% for entity in tablevisucontent %}
+                     var html = $("#contenttextfile").text();
+                     var label="{{entity.label}}";
+                     var start="{{entity.startChar}}";
+                     var end="{{entity.endChar}}";
+                    result += text.substring(i, start);
+                  {% if entity.nerdType=='Location'%}
+                            result+="<span style='background-color:{{visuColors['location']}}' title='NERD Type: {{entity.nerdType}} \nText position: {{entity.startChar}}' id='"+"{{entity.id}}"+"' onclick='createInteraction({{entity.id}});'>"+text.substring(start,end)+"</span>";
+                   {% elseif entity.nerdType=='Thing' %}
+                            result+="<span style='background-color:{{visuColors['thing']}}' title='NERD Type: {{entity.nerdType}} \nText position: {{entity.startChar}}' id='"+"{{entity.id}}"+"' onclick='createInteraction({{entity.id}});'>"+text.substring(start,end)+"</span>";
+                   {% elseif entity.nerdType=='Person' %}
+                            result+="<span style='background-color:{{visuColors['person']}}' title='NERD Type: {{entity.nerdType}} \nText position: {{entity.startChar}}' id='"+"{{entity.id}}"+"' onclick='createInteraction({{entity.id}});'>"+text.substr(start,label.length)+"</span>";
+                    {% elseif entity.nerdType=='Organization' %}
+                            result+="<span style='background-color:{{visuColors['organization']}}' title='NERD Type: {{entity.nerdType}} \nText position: {{entity.startChar}}' id='"+"{{entity.id}}"+"' onclick='createInteraction({{entity.id}});'>"+text.substr(start,label.length)+"</span>";
+                   {% elseif entity.nerdType=='Amount' %}
+                            result+="<span style='background-color:{{visuColors['amount']}}' title='NERD Type: {{entity.nerdType}} \nText position: {{entity.startChar}}' id='"+"{{entity.id}}"+"' onclick='createInteraction({{entity.id}});'>"+text.substr(start,label.length)+"</span>";
+                   {% elseif entity.nerdType=='Time' %}
+                              result+="<span style='background-color:{{visuColors['time']}}' title='NERD Type: {{entity.nerdType}} \nText position: {{entity.startChar}}' id='"+"{{entity.id}}"+"' onclick='createInteraction({{entity.id}});'>"+text.substr(start,label.length)+"</span>";
+                   {% elseif entity.nerdType=='Product' %}
+                             result+="<span style='background-color:{{visuColors['product']}}' title='NERD Type: {{entity.nerdType}} \nText position: {{entity.startChar}}' id='"+"{{entity.id}}"+"' onclick='createInteraction({{entity.id}});'>"+text.substr(start,label.length)+"</span>";
+                   {% elseif entity.nerdType=='Event' %}
+                            result+="<span style='background-color:{{visuColors['event']}}' title='NERD Type: {{entity.nerdType}} \nText position: {{entity.startChar}}' id='"+"{{entity.id}}"+"' onclick='createInteraction({{entity.id}});'>"+text.substr(start,label.length)+"</span>";
+                   {% elseif entity.nerdType=='Function' %}
+                            result+="<span style='background-color:{{visuColors['function']}}' title='NERD Type: {{entity.nerdType}} \nText position: {{entity.startChar}}' id='"+"{{entity.id}}"+"' onclick='createInteraction({{entity.id}});'>"+text.substr(start,label.length)+"</span>";
+                   {% elseif entity.nerdType=='Animal' %}
+                           result+="<span style='background-color:{{visuColors['animal']}}' title='NERD Type: {{entity.nerdType}} \nText position: {{entity.startChar}}' id='"+"{{entity.id}}"+"' onclick='createInteraction({{entity.id}});'>"+text.substr(start,label.length)+"</span>";
+               
+                 {%endif%}
+                    i=end;
+              {% endfor %}
+              //add text
+                 result+=text.substring(i,text.length);
+               $("#contenttextfile").html(result);
+         {% endif %}
+     }
+     
+  
+     //creer l'interaction entre texte et carte
+    function createInteraction(identity)
+    {
+       {% for entity in tablevisucontent %}
+                  $("span#"+"{{entity.id}}").css('font-size', '100%');
+  		    	    $("span#"+"{{entity.id}}").css("font-weight","normal");
+  		    	     if(identity=={{entity.id}}){
+  		    	      
+  		    	       //afficher en bas de carte de détail de l'entité selectionnée
+  			              divdetailsentity = document.getElementById("detailsentity");
+                   var content="<table class=\"table\"><tr><td><b>Entity Label </b></td><td>{{entity.label}}</td></tr><tr><td><b>NERD Type</b></td><td> {{entity.nerdType}}</td></tr>";
+                   content+="<tr><td><b>Text Position</b></td><td> {{entity.startChar}}-{{entity.endChar}}</td></tr>";
+                   content+="<tr><td><b>Extractor</b></td><td> {{entity.extractor}}</td></tr>";
+                   {% if entity.extractorType !=null %}
+                    content+="<tr><td><b>Extractor Type</b></td><td>";
+                       {% set arrayExtractorType = entity.extractorType|split(',') %}
+  					            {% for value in arrayExtractorType%}
+                       content+="{{ value}}";
+                        {% if not loop.last %}
+                           content+=",<br/>"; 
+                        {% endif %}
+  	                  {% endfor %}
+                    content+="</td></tr>";
+                   {% endif %}
+                    content+="<tr><td><b>Uri</b></td><td>";
+                   {% if entity.uri !=null %}
+                   content+="{{entity.uri}}"; 
+                    {% else %}
+                   content+="Not defined";
+                   {% endif %}
+                   content+="</td></tr>";
+                   content+="<tr><td><b>Relevance</b></td><td> {{entity.relevance}}</td></tr>";
+                   content+="<tr><td><b>Confidence</b></td><td> {{entity.confidence}}</td></tr>";
+                   {% if entity.geolocation.geolocatedBy is defined %}
+                   content+="<tr><td><b>Geolocated By</b></td><td> {{entity.geolocation.geolocatedBy}}</td></tr>";
+                   {% endif %}
+                   {% if entity.geolocation.geometry is defined and  entity.geolocation.geometry!=null%}
+                   content+="<tr><td><b>Geometry</b></td><td> {{entity.geolocation.geometry}}</td></tr>";
+                   {% endif %}
+                   content+="</table>";
+                   divdetailsentity.innerHTML=content;
+                    }
+            {% endfor %}
+            initialiserMarqueurs(identity);
+    }
+    function initialiserMarqueurs(span_id){
+        //modifier style de l'entité selectionnée
+         $('span#'+span_id).css('font-size', '110%');
+		       $('span#'+span_id).css("font-weight","Bold");
+		       //initialiser les markers
+		       initMarqueurs();
+		     //parcourir tous les markers
+        for(var i = 0; i < markers.length; i++) {
+                        //mettre grande icon comme marker si l'entité est selectionné 
+                     if(markers[i].id==span_id){
+    				              	//modifier l'icon normale de marker en icon plus grande
+    				              	switch(markers[i].customInfo){
+    				              	case 'Location':
+                         markers[i].setIcon("{{ asset('img/markers/locationBig.png') }}");
+    				              	break;
+    				              	case 'Thing':
+                         markers[i].setIcon("{{ asset('img/markers/thingBig.png') }}");
+    				              	break;
+    				              	case 'Organization':
+                         markers[i].setIcon("{{ asset('img/markers/organizationBig.png') }}");
+    				              	break;
+    				              	case 'Amount':
+                         markers[i].setIcon("{{ asset('img/markers/amountBig.png') }}");
+    				              	break;
+    				              		case 'Person':
+                         markers[i].setIcon("{{ asset('img/markers/personBig.png') }}");
+    				              	break;
+    				              		case 'Product':
+                         markers[i].setIcon("{{ asset('img/markers/productBig.png') }}");
+    				              	break;
+    				              		case 'Event':
+                         markers[i].setIcon("{{ asset('img/markers/eventBig.png') }}");
+    				              	break;
+    				              	case 'Product':
+                         markers[i].setIcon("{{ asset('img/markers/productBig.png') }}");
+    				              	break;
+    				              	case 'Time':
+                         markers[i].setIcon("{{ asset('img/markers/timeBig.png') }}");
+    				              	break;
+    				              	case 'Function':
+                         markers[i].setIcon("{{ asset('img/markers/functionBig.png') }}");
+    				              	break;
+    				              	}	
+                          //centrer la position de marker sur la carte
+                         map.setCenter(markers[i].getPosition());
+                     }
+            }
+    }
+    //initialiser les marqueurs
+     function initMarqueurs(){
+       for(var i = 0; i < markers.length; i++) {
+               	switch(markers[i].customInfo){
+    				              	case 'Location':
+                         markers[i].setIcon("{{ asset('img/markers/location.png') }}");
+    				              	break;
+    				              	case 'Thing':
+                         markers[i].setIcon("{{ asset('img/markers/thing.png') }}");
+    				              	break;
+    				              	case 'Organization':
+                         markers[i].setIcon("{{ asset('img/markers/organization.png') }}");
+    				              	break;
+    				              	case 'Amount':
+                         markers[i].setIcon("{{ asset('img/markers/amount.png') }}");
+    				              	break;
+    				              		case 'Person':
+                         markers[i].setIcon("{{ asset('img/markers/person.png') }}");
+    				              	break;
+    				              		case 'Product':
+                         markers[i].setIcon("{{ asset('img/markers/product.png') }}");
+    				              	break;
+    				              		case 'Event':
+                         markers[i].setIcon("{{ asset('img/markers/event.png') }}");
+    				              	break;
+    				              	case 'Product':
+                         markers[i].setIcon("{{ asset('img/markers/product.png') }}");
+    				              	break;
+    				              	case 'Time':
+                         markers[i].setIcon("{{ asset('img/markers/time.png') }}");
+    				              	break;
+    				              	case 'Function':
+                         markers[i].setIcon("{{ asset('img/markers/function.png') }}");
+    				              	break;
+    				              	}	
+                }
+      }
+    //au chargement de page
+ $(document ).ready(function() {
+  	
+    //Creating the map.
+     map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 4,
+      center: new google.maps.LatLng(48.864716,	2.349014), //le point central par default (paris)
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+       });
+      //appelle d'annotation des entités du texte
+      annoterTexte();
+
+      //parcourir les entités
+          {% for entity in tablevisucontent %}
+            {% if entity.geolocation.geometry is defined and entity.geolocation.geometry!=null %}
+               //appelle fonction activateInteraction pour activer les interactions entre la carte et le texte
+               var marker=createMarker(map,"{{entity.id}}","{{entity.label}}","{{entity.geolocation.geometry.getLongitude()}}","{{entity.geolocation.geometry.getLatitude()}}","{{entity.startChar}}","{{entity.endChar}}","{{entity.nerdType}}");
+             {% endif %}
+	         {% endfor %}
+	         
+	     //initialiser tous les markers en icons normaux
+         initMarqueurs();
+  });
+  
+</script>
+ 
+
+	    	
+

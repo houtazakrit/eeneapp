@@ -1,0 +1,115 @@
+{% trans_default_domain 'FOSUserBundle' %}
+<div class="row">
+              		<div class="col-md-offset-2 col-md-8">
+			  	 <div class="panel panel-primary" >
+					  <div class="panel-heading">Sign up</div>
+					   <div class="panel-body">
+      <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+      
+       {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 
+       'attr': {'validation_groups': 'Registration', 'class':'form-horizontal', 'novalidate':'novalidate'}
+         }) }}
+          <span class="error">
+               {{ form_errors(form) }}
+          </span>
+          <div class="form-group">
+
+                    <label for="inputName" class="col-lg-3 control-label">First name</label>
+
+                    <div class="col-lg-5">
+
+                        {{form_widget(form.firstname)}}
+
+                    </div>
+
+          </div>
+             <div class="form-group">
+
+                    <label for="inputName" class="col-lg-3 control-label">Last name</label>
+
+                    <div class="col-lg-5">
+
+                        {{form_widget(form.lastname)}}
+
+                    </div>
+
+          </div>
+           <div class="form-group">
+
+                    <label class="col-lg-3 control-label">User name(*)</label>
+
+                    <div class="col-lg-5">
+
+                        {{form_widget(form.username)}}
+                     
+                            {{ form_errors(form.username) }}
+                        
+                    </div>
+
+          </div>
+             <div class="form-group">
+
+                    <label class="col-lg-3 control-label">Email(*) </label>
+
+                    <div class="col-lg-5">
+
+                        {{form_widget(form.email)}}
+                       
+                         {{ form_errors(form.email) }}
+                     
+
+                    </div>
+
+          </div>
+            
+             
+              <div class="form-group">
+
+                    <label class="col-lg-3 control-label" align="left">Password(*) </label>
+
+                    <div class="col-lg-5">
+               {{ form_widget(form.plainPassword.first)}}  
+             
+  {{ form_errors(form.plainPassword.first)}} 
+
+                    </div>
+
+           </div>
+             
+              <div class="form-group">
+
+                    <label class="col-lg-3 control-label">Repeat Password(*) </label>
+
+                    <div class="col-lg-5">
+               {{ form_widget(form.plainPassword.second)}}  
+
+                    </div>
+
+          </div>
+             
+              <div class="form-group">
+
+                    <label class="col-lg-3 control-label">Organization </label>
+
+                    <div class="col-lg-5">
+                  {{ form_widget(form.organization)}}  
+                    </div>
+              </div>
+              
+              <div class="form-group">
+
+                    <label class="col-lg-3 control-label">Country </label>
+
+                    <div class="col-lg-5">
+                  {{ form_widget(form.country)}}  
+                    </div>
+              </div>
+         
+     {{ form_rest(form) }}
+       <button class="btn btn-primary signup center-block" type="submit" name="action">
+          Submit
+       </button>
+    
+{{ form_end(form) }}
+</div></div></div>
+</div>

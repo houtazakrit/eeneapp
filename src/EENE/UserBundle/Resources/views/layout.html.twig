@@ -1,0 +1,42 @@
+{% extends '::base.html.twig' %}
+    {% block stylesheets %}
+    {% endblock %}
+{% block content %}
+ <div class="container">  
+  <nav class="navbar navbar-default navbar-static-top" role="navigation">
+    <ul class="nav nav-pills">
+        <li><a class="glyphicon glyphicon-file" href="{{ path('user_homepage') }}"> Files</a></li>
+         <li><a class="glyphicon glyphicon-search" href="{{ path('analyze_text') }}"> Analyze</a></li>
+        <li><a class="glyphicon glyphicon-upload" href="{{ path('upload_file')}}"> Upload</a> </li>
+        <li class="dropdown pull-right" style="width: 180px;">
+                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                   <i>
+             <span class="glyphicon glyphicon-user"></span>
+                   {% if app.user %}
+                    {{app.user.username}} 
+                    {% endif  %}
+                   </i>  
+                   <b class="caret"></b></a>
+               <ul class="dropdown-menu">
+                 {% if is_granted("ROLE_ADMIN") %}
+                   <li><a href="{{ path('easyadmin') }}">
+                       <i class="fa fa-tasks" aria-hidden="true"></i> Admin Dashboard</a></li>
+                 {% endif %}
+                 <li><a href="{{ path('fos_user_profile_show') }}">
+                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i> My Profile</a></li>
+                  <li><a style="color:red;" onclick="return confirm('This action will delete your account and your files. Please confirm.')"  href="{{ path('user_delete') }}">
+                      <i class="fa fa-times" aria-hidden="true"></i> Delete my account</a></li>
+                 <li><a href="{{ path('fos_user_security_logout') }}">
+                     <i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a></li>
+              </ul>
+        </li>
+    </ul>
+ </nav>
+           {# import le contenu de page  #}
+        {% block eene_user_content %}
+        {% endblock %}
+       
+</div>
+
+
+{% endblock %}

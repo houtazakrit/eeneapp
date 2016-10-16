@@ -1,0 +1,86 @@
+{% trans_default_domain 'FOSUserBundle' %}
+   <div class="col-md-offset-2 col-md-8">
+			  	 <div class="panel panel-primary" >
+					  <div class="panel-heading">Modify my profile</div>
+   					 <div class="panel-body">
+       {{ form_start(form, { 'action': path('fos_user_profile_edit'), 'attr': { 'class': 'fos_user_profile_edit' } }) }}
+           <div class="form-group">
+        
+                            <label for="inputName" class="col-lg-3 control-label">First name</label>
+        
+                            <div class="col-lg-5">
+        
+                                {{form_widget(form.firstname)}}
+        
+                            </div>
+        
+                  </div>
+                     <div class="form-group">
+        
+                            <label for="inputName" class="col-lg-3 control-label">Last name</label>
+        
+                            <div class="col-lg-5">
+        
+                                {{form_widget(form.lastname)}}
+        
+                            </div>
+        
+                  </div>
+                  
+                     <div class="form-group">
+        
+                            <label class="col-lg-3 control-label">Email(*) </label>
+        
+                            <div class="col-lg-5">
+        
+                                {{form_widget(form.email)}}
+                                {{ form_errors(form.email)}} 
+        
+                            </div>
+        
+                  </div>
+                    
+                     
+                      <div class="form-group">
+        
+                            <label class="col-lg-3 control-label" align="left">Current password(*) </label>
+        
+                            <div class="col-lg-5">
+                       {{ form_widget(form.current_password)}}
+                       {{ form_errors(form.current_password)}} 
+        
+                            </div>
+        
+                   </div>
+                     
+                   
+                       <div class="form-group">
+        
+                            <label class="col-lg-3 control-label">Organization </label>
+        
+                            <div class="col-lg-5">
+                          {{ form_widget(form.organization)}}  
+                            </div>
+                      </div>
+                      
+                      <div class="form-group">
+        
+                            <label class="col-lg-3 control-label">Country </label>
+        
+                            <div class="col-lg-5">
+                          {{ form_widget(form.country)}}  
+                            </div>
+                      </div>
+                   <span class="error">
+                       {{ form_errors(form) }}
+                  </span>
+           {{ form_rest(form) }}
+           <div align="center" class="button-wrap">
+               <button class="btn btn-primary signup center-block" type="submit" name="action">
+                  Submit
+               </button>
+            </div>
+        {{ form_end(form) }}
+        </div>
+    </div>
+ </div>

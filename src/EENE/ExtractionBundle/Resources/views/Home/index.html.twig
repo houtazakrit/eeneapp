@@ -1,0 +1,224 @@
+{% extends "UserBundle::layout.html.twig" %}
+{% block title %}Home{% endblock %}
+{% block eene_user_content %}
+{# affichage des messages de succès #}
+ {# affichage messsage de succes (suppressin de fichier) #}
+    {% for flashMessage in app.session.flashbag.get('successdelete') %}
+		<div class="alert alert-success">
+		       {{ flashMessage }}
+		 </div>
+    {% endfor %}
+ {# affichage messsage de succes (processus de geolocalisatin) #}
+    {% for flashMessage in app.session.flashbag.get('successgeolocation') %}
+		<div class="alert alert-success">
+		       {{ flashMessage }}
+		    {# boutton pour voir le fichier log de gelocalisation des entités notGeocoded #}
+		     <a class="btn btn-primary" href="{{ path('eene_viewlogfile')}}">View log file</a>
+		</div>
+    {% endfor %}
+    
+	<div class="row">
+    <div class="panel panel-primary">
+    <div class="panel-heading">My named entities files</div>
+        <div class="panel-body">
+           <table id="tablefiles"  class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+                 <thead>
+				      <tr>
+				        <th rowspan="2">NERD files (.json)</th>
+				        <th rowspan="2">Created at</th>
+				        <th rowspan="2">Extractor(s)</th>
+				        <th rowspan="2">Number of Entities</th>
+				        <th colspan="4"><center><i class="fa fa-globe" aria-hidden="true"></i> Spatial Entities (Location)</center></th>
+				        <th rowspan="2"><i class="fa fa-calendar" aria-hidden="true"></i> Temporal Entities (Time)</th>
+				        <th rowspan="2"><i class="fa fa-list-alt" aria-hidden="true"></i> Other Entities</th>
+				        <th rowspan="2">Actions</th>
+				      </tr>
+				       <tr>
+				         <th><span title="Number of Spatial Entities"  class="glyphicon glyphicon-map-marker" style="color:black;"></span> </th>
+				         <th><span title="Number of Geocoded Spatial Entities"  class="glyphicon glyphicon-map-marker" style="color:green;"></span> </th>
+				         <th><span title="Number of Not Geocoded Spatial Entities"  class="glyphicon glyphicon-map-marker" style="color:orange;"></span> </th>
+				         <th><span title="Number of Not Geocodable Spatial Entities"  class="glyphicon glyphicon-map-marker" style="color:red;"></span> </th>
+				      </tr>
+				</thead>
+				<tbody>
+				{% if tablejsonfiles %}
+				{% for jsonfile in tablejsonfiles %}
+				      <tr>
+				      	<td>
+				      		<a title="View or Download this file" 
+				      	href="{{path('file_download',{'id':jsonfile[0].id,'typefile':'jsonfile'})}}">{{ jsonfile[0].name|default("") }}</a></td>
+					     <td>{{ jsonfile[0].createdAt|date('Y-m-d H:i:s') }}</td>
+					     <td> 
+		{# remplir tableau des extracteurs pour chaque jsonFile qui sont differents #}
+					     {% set tabExtractors = [] %}
+					     	{% for entity in jsonfile[0].getNerdFileEntities() %}
+					     	    {% if entity.extractor not in tabExtractors %}
+								   {% set tabExtractors = tabExtractors|merge([entity.extractor]) %}
+							     {% endif %}
+
+					     	{% endfor%}
+		 {# afficher les extracteurs de tableau #}
+					     	{% for extractor in tabExtractors  %}
+					            {{ extractor}}{% if not loop.last %}, {% endif %}
+					  	     {% endfor %}
+					 
+					     </td>
+				        <td>
+	{#  le nombre total de toutes les entités       #}
+				        	{% set  nbentities=jsonfile.nbentities|default("0") %}
+				        	{% if nbentities==0 %}
+				        	{{ nbentities }} 
+				        		{% else %}
+                             <a  href="{{path('details_allentities',{'idjson':jsonfile[0].id})}}" 
+				             title="View corresponding entities" > 
+				              {{ nbentities }} 
+				            </a> 
+					      {% endif %}
+				     
+				        </td>
+				        <td>
+	{#  le nombre total des entités spatiales  #}
+				        	{% set  nbtotspatial= 0 %}
+				        	{% for entity in jsonfile[0].getNerdFileEntities() if entity.getNerdType()=='Location' %}
+						        {% set nbtotspatial=nbtotspatial+1 %} 
+						     {% endfor %}
+				        	{% if nbtotspatial>0 %} 
+		                             <a  href="{{path('details_spatialentities',{'id':jsonfile[0].id,'type':'all'})}}" 
+						             title="View corresponding entities" > 
+						              {{ nbtotspatial }} 
+						               </a> 
+				               {% else %}
+				                  {{ nbtotspatial }}
+					         {% endif %}
+				         </td>
+				         
+				        <td>
+	 {#  le nombre des entities spatiales 'geocoded' #}
+				        	{% set  nbgeocodedspatial= 0 %}
+				        	{% for entity in jsonfile[0].nerdFileEntities if entity.getNerdType()=='Location' %}
+						       {%  if entity.geolocation.geolocatedBy!='notGeocoded' and entity.geolocation.geolocatedBy!='notGeocodable'%}
+						           {% set nbgeocodedspatial=nbgeocodedspatial+1 %} 
+						        {% endif %}
+						     {% endfor %}
+				        	{% if nbgeocodedspatial>0 %} 
+                             <a  href="{{path('details_spatialentities',{'id':jsonfile[0].id,'type':'geocoded'})}}" 
+				             title="View corresponding entities" > 
+				              {{ nbgeocodedspatial }} 
+				            </a> 
+					      {% else %}
+				                  {{ nbgeocodedspatial }}
+					         {% endif %}
+				        </td>
+				         <td>
+	{#  nombre des entities spatiales   'not geocoded '  #}
+				        	{% set  nbnotgeocodedspatial= 0 %}
+				        	{% for entity in jsonfile[0].nerdFileEntities if entity.getNerdType()=='Location' %}
+						       {% if entity.geolocation.geolocatedBy=='notGeocoded' %}
+						           {% set nbnotgeocodedspatial=nbnotgeocodedspatial+1 %} 
+						        {% endif %}
+						     {% endfor %}
+				        	{% if nbnotgeocodedspatial>0 %} 
+						        <a  href="{{path('details_spatialentities',{'id':jsonfile[0].id,'type':'notGeocoded'})}}" 
+					             title="View corresponding entities" > 
+					            {{ nbnotgeocodedspatial}} 
+				                </a> 
+				           	  {% else %}
+				                  {{ nbnotgeocodedspatial }}
+					         {% endif %}
+				        </td>
+				        <td>
+	{# nombre  des entities spatiales 'not geocodable'    #}
+				        	{% set  nbnotgeocodablespatial= 0 %}
+				        	{% for entity in jsonfile[0].nerdFileEntities if entity.getNerdType()=='Location' %}
+						       {%  if entity.geolocation.geolocatedBy=='notGeocodable' %}
+						           {% set nbnotgeocodablespatial=nbnotgeocodablespatial+1 %} 
+						        {% endif %}
+						     {% endfor %}
+				        	{% if nbnotgeocodablespatial>0 %} 
+                             <a  href="{{path('details_spatialentities',{'id':jsonfile[0].id,'type':'notGeocodable'})}}" 
+				             title="View corresponding entities" > 
+				            {{ nbnotgeocodablespatial}}
+				            </a> 
+				              {% else %}
+				                  {{ nbnotgeocodablespatial }}
+					         {% endif %}
+				        </td>
+				        <td>
+	{#   nombre des entités temporelles       #}
+				        	{% set  nbtemporal= 0 %}
+				        	{% for entity in jsonfile[0].getNerdFileEntities() if entity.getNerdType()=='Time' %}
+						        {% set nbtemporal=nbtemporal+1 %} 
+						     {% endfor %}
+				          {% if nbtemporal>0 %} 
+                             <a  href="{{path('details_temporelotherentities',{'idjson':jsonfile[0].id,'entitytype':'temporal'})}}" 
+				              title="View corresponding entities" > 
+				              {{ nbtemporal }} 
+				             </a> 
+				             {% else %}
+				             {{ nbtemporal }} 
+					      {% endif %}
+				        </td>
+				        <td>
+	{#  nombre des autres entités (ne sont pas de type Location et Time) #}
+				        	{% set  nbother= 0 %}
+				        	{% for entity in jsonfile[0].getNerdFileEntities() if entity.getNerdType()!='Time' and entity.getNerdType()!='Location' %}
+						        {% set nbother=nbother+1 %} 
+						     {% endfor %}
+				           {% if nbother>0 %} 
+                             <a  href="{{path('details_temporelotherentities',{'idjson':jsonfile[0].id,'entitytype':'other'})}}" 
+				             title="View corresponding entities" > 
+				              {{ nbother }} 
+				             </a> 
+				             {% else %}
+				             {{ nbother }}
+					       {% endif %}
+					       
+				        </td>
+				        <td>
+	{# Actions (visualization, delete JSON file(s), view or download Text file, geoceder not geocoded entities) #}
+					       
+					        <a href="{{path('visualization_homepage',{'idjson':jsonfile[0].id})}}" title="Visualization">
+					        	<span class="glyphicon glyphicon-eye-open">
+					        	</span>
+					        </a>
+					        <a href="{{path('file_delete',{'id':jsonfile[0].id})}}" onclick="return confirm('Please confirm to delete this Named Entities file?')" 
+					        title="Delete this Named Entities file: '{{jsonfile[0].name}}'"><span class="glyphicon glyphicon-trash"></span></a>
+                           {% if jsonfile[0].getTextFile().getId() is defined %}
+					         <a  href="{{path('file_download',{'id':jsonfile[0].getTextFile().getId(),'typefile':'textfile'})}}" 
+					          title="View or Download corresponding Text file: '{{jsonfile[0].getTextFile().getName()}}'" > 
+					          <i class="glyphicon glyphicon-file" ></i>
+					         </a>
+					      {% else %}
+					        <a  title="No associated Text file" data-role="disable"> 
+					        <i class="fa fa-file-o" aria-hidden="true"></i>
+					         </a>
+				         {% endif %}
+				         {% if nbnotgeocodedspatial==0 %}
+				            <a style="color:grey;" title="0 not geocoded spatial entitiy in '{{jsonfile[0].name}}'. EENE geolocalization service cannot be run.">
+				            	<i class="glyphicon glyphicon-map-marker"></i>
+				         	</a> 
+				        {% else %}
+				          <a title="Geolocate the {{ nbnotgeocodedspatial }} not geocoded spatial entities in '{{jsonfile[0].name}}'. Click to run EENE geolocalization service."
+				           href="{{path('geocoder_notgeocodedentities',{'idjson':jsonfile[0].id })}}">
+				         	<i class="glyphicon glyphicon-map-marker" ></i>
+				          </a> 
+	                        {% endif %}
+				        </td>
+				      </tr>
+                    {% endfor %}
+                   {% endif%}
+               </tbody>
+            </table>
+  </div>
+  {# footer de panel #}
+  <div class="panel-footer">
+  	<p><span class="glyphicon glyphicon-map-marker" style="color:green;"></span> Geocoded spatial entities (green marker) have a geometry (computed by an extractor or EENE geolocalization service) and can be displayed on a map.</p>
+    <p><span title="Number of Geocoded Spatial Entities"  class="glyphicon glyphicon-map-marker" style="color:orange;"></span> Not geocoded entities (orange marker) have not been geolocated because EENE geolocalization service was temporarily unavailable (daily max requests exceeded). This geolocalization process can be run later by clicking on <a><i class="glyphicon glyphicon-map-marker" ></i></a> action.</p>
+    <p><span title="Number of Geocoded Spatial Entities"  class="glyphicon glyphicon-map-marker" style="color:red;"></span> Not geocodable entities (red marker) could not be geolocated with EENE geolocalization service.</p>
+    <p><span class="fa fa-info-circle"></span> EENE geolocalization service relies on following webservices: DbPedia, Geonames and GoogleMapsAPI.</p>
+  </div>
+ </div>
+ </div>
+  {% endblock %}
+  {% block javascripts %}
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "::base.html.twig" %}
+{% block title %}Login{% endblock %}
+{% block eene_user_content %}
+
+          		<div class="col-md-offset-4 col-md-4">
+			  	 <div class="panel panel-primary" >
+					  <div class="panel-heading">Sign in</div>
+					   <div class="panel-body">
+					   	<div class="container-login">
+			        	<form action='{{ path("fos_user_security_check") }}'  method="post">
+		                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+			                <div class="login-fields">
+		                    	
+		                    	  {% if error %}
+                                       <div style=" color: #ff0404;font-family: helvetica;font-size: 15px">Your username and / or password is incorrect</div>
+                                 {% endif %}
+                                  <p></p>
+						    	<div class="field">
+							   	
+								  <input type="text" id="username" name="_username" value="" placeholder="Email or Username" class="login username-field"  />
+						     	</div> <!-- /field -->
+						     	 <p></p>
+						     	<div class="field">
+								  
+								  <input type="password" id="password" name="_password" value="" placeholder="Password" class="login password-field" />
+							     </div> <!-- /password -->
+		            	       </div> <!-- /login-fields -->
+		            	        <p></p>
+			                      <input type="submit" id="_submit" name="_submit" value="Login" class="btn btn-primary signup" />
+			                    </form>
+			            <p></p>
+			            <a href="{{ path('fos_user_resetting_request') }}">Forgot password?</a>
+              
+			        <div class="already">
+			            <p>Don't have an account yet?
+			            <a href="{{ path("fos_user_registration_register") }}">Sign Up</a></p>
+			        </div>
+			        </div>
+			      </div>
+			    </div>
+			    </div>
+		</div>
+{% endblock eene_user_content %}

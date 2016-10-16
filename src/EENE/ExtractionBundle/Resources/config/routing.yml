@@ -1,0 +1,62 @@
+user_homepage:
+    path:     /home/myfiles
+    defaults: { _controller: ExtractionBundle:Home:index }
+user_myfiles:
+    path:     /home/files
+    defaults: { _controller: ExtractionBundle:Home:index }   
+    options:
+        expose: true
+eene_home:
+    path:     /
+    defaults: { _controller: ExtractionBundle:Home:index }
+eene_login:
+    path:     /login
+    defaults: { _controller: FOSUserBundle:Security:login }
+eene_myfiles:
+    path:     /home
+    defaults: { _controller: ExtractionBundle:Home:index }
+upload_textjsonfile:
+    path:     /home/upload_txtjsonfile
+    defaults: { _controller: ExtractionBundle:Upload:uploadTxtJsonFile }
+upload_jsonfile:
+    path:     /home/upload_jsonfile
+    defaults: { _controller: ExtractionBundle:Upload:uploadJsonFile }
+upload_file:
+    path:     /home/uploadFile
+    defaults: { _controller: ExtractionBundle:Upload:index } 
+file_download:
+    path:     /home/fileDownload/{id}/{typefile}
+    defaults: { _controller: ExtractionBundle:File:downloadFile } 
+file_delete:
+    path:     /home/fileDelete/{id}
+    defaults: { _controller: ExtractionBundle:File:deleteFile } 
+details_spatialentities:
+    path:     /home/entitiesDetail/{id}/{type}
+    defaults: { _controller: ExtractionBundle:Entity:showEntities } 
+details_allentities:
+    path:     /home/allEntities/{idjson}
+    defaults: { _controller: ExtractionBundle:Entity:showAllEntities } 
+details_temporelotherentities:
+    path:     /home/temporelOtherEntities/{idjson}/{entitytype}
+    defaults: { _controller: ExtractionBundle:Entity:showTemporelAndOtherEntities } 
+analyze_text:
+    path:     /home/analyze
+    defaults: { _controller: ExtractionBundle:Analyze:analyze }
+geocoder_notgeocodedentities:
+    path:     /home/geolocalisation/{idjson}
+    defaults: { _controller: ExtractionBundle:Home:geocoderNotGeocodedEntities }     
+analyze_text_nerd:
+    path:     /home/analyzeText
+    defaults: { _controller: ExtractionBundle:Analyze:analyzeText }
+    methods:  [POST, GET]
+eene_viewlogfile:
+    path:     /home/viewlogfile
+    defaults: { _controller: ExtractionBundle:File:viewLogFile }
+
+    
+  
+    
+    
+    
+    
+

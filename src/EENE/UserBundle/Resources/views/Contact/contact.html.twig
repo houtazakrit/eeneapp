@@ -1,0 +1,74 @@
+{# tester si l'utilisateur est connecté #}
+{% extends app.user 
+    ? "UserBundle::layout.html.twig" 
+    : "::base.html.twig" %}
+{% block title %}Contact{% endblock %}
+{% block eene_user_content %}
+    <div class="row">
+                  		<div class="col-md-offset-2 col-md-8">
+            			  	 <div class="panel panel-primary" >
+            					  <div class="panel-heading">Contact</div>
+            					    <div class="panel-body">
+            					        
+            					        {%  if not app.user %}
+            					           <center> 
+            					             <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}
+            					               </a>
+            					            </center>
+            					         {%  endif %}
+            					      
+            					       
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                 <td><img src="{{ asset('img/photo_christophe.jpg') }}"/></td>
+                                            <td> 
+                                            <p><a href="http://www.iutbayonne.univ-pau.fr/~marquesu/" target="_blank" >
+                                   Christophe Marquesuzaà</a></p>
+                                   <p>christophe.marquesuzaa[at]iutbayonne.univ-pau.fr</p>
+                                           </td>
+                                       
+                                        </tr>
+                                        <tr>
+                                             <td><img src="{{ asset('img/photo_patrick.jpg') }}"/></td>
+                                        <td>
+                                         <p>
+                                              <a href="http://www.iutbayonne.univ-pau.fr/~etchever/" target="_blank" >
+                                             Patrick Etcheverry</a>
+                                          </p>
+                                          
+                                        <p>
+                                            patrick.etcheverry[at]iutbayonne.univ-pau.fr
+                                            </p>
+                                            </td>
+                                        </tr> 
+                                         <tr>
+                                             <td><img src="{{ asset('img/photo_christian.jpg') }}"/></td>
+                                            <td>  
+                                            <p><a href="http://liuppa.univ-pau.fr/live/cv/christian-sallaberry" target="_blank" >
+                                           Christian Sallaberry</a></p>
+                                        <p>
+                                        christian.sallaberry[at]univ-pau.fr</p></td>
+                                       
+                                        </tr>
+                                        </tbody>
+                                         
+                                    </table>
+                            <center>
+                                     <p>
+                                     <a href="http://www.univ-pau.fr" target="_blank" >
+                                    Université de Pau et des Pays de l'Adour (UPPA)</a>
+                                    </p>
+                
+                                 <p>
+                                <a href="http://liuppa.univ-pau.fr" target="_blank" >
+                                    Laboratoire Informatique de l'Université de Pau et des Pays de l'Adour (LIUPPA)</a>
+                                   </p><p>
+                                <a href="http://erozate.iutbayonne.univ-pau.fr/t2i/" target="_blank" >T2i team</a>
+                                </p>
+                           </center>
+             </div>
+         </div>
+         </div>
+    </div>
+{% endblock %}

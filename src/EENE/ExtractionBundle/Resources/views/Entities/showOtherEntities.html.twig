@@ -1,0 +1,66 @@
+{% extends "UserBundle::layout.html.twig" %}
+{% block title %}Home{% endblock %}
+{% block eene_user_content %}
+
+	<div class="row">
+    <div class="panel panel-primary">
+				  <div class="panel-heading">
+				  	{% if tableEntities|length > 0 %}
+           {{ tableEntities|length  }} 'Other entitie(s)' in '{{ tableEntities[0].nerdFile.name}}'
+       {% endif %}
+                 </div>
+				   <div class="panel-body">
+           <table id="tableentities"  class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+                 <thead>
+				      <tr>
+				        <th>Entity</th>
+				        <th>Text Position</th>
+				        <th>Extractor</th>
+				        <th>Extractor Type</th>
+				         <th>NERD Type</th>
+				          <th>Geometry</th>
+				         <th>Geolocated by</th>
+				      </tr>
+				</thead>
+				<tbody>
+				{% for entity in tableEntities %}
+				      <tr>
+					     <td>{{ entity.label }}</td>
+					     <td> 
+					       {{ entity.startChar}}
+					     </td>
+					      <td>
+                           {{ entity.extractor}}
+				        </td>
+				        <td>
+                           {% set arrayExtractorType = entity.extractorType|split(',') %}
+					          {% for value in arrayExtractorType%}
+					        	  {{ value}}{% if not loop.last %}, {% endif %}<br />
+	                           {% endfor %}
+				        </td>
+				         <td>
+                           {{ entity.nerdType}}
+				        </td>
+				         <td>
+                           {{ entity.geolocation.geometry|default('Null')}}
+				        </td>
+				        <td>
+				       {{ entity.geolocation.geolocatedBy|default('Null')}}
+				        </td>
+				      </tr>
+            
+                    {% endfor %}
+               </tbody>
+  
+            </table>
+		    </div>
+		    
+		</div>
+  	</div>
+	
+
+  {% endblock %}
+  {% block javascripts %}
+
+    <script src="{{ asset('') }}"></script> 
+{% endblock %}

@@ -1,0 +1,122 @@
+{% extends "UserBundle::layout.html.twig" %}
+{% block title %}Analyze{% endblock %}
+{% block eene_user_content %}
+{% for flashMessage in app.session.flashbag.get('notice') %}
+    <div class="alert alert-success">
+        {{ flashMessage }}
+        <a class="btn btn-primary" href="{{ path('eene_viewlogfile')}}">View log file</a>
+    </div>
+{% endfor %}
+{% for flashMessage in app.session.flashbag.get('errorNerd') %}
+    <div class="alert alert-danger">
+        {{ flashMessage }}
+    </div>
+{% endfor %}
+
+
+        <div id="loading-indicator" style="display:none">
+           
+                <div id="textloading">
+                     <b>Analyzing named entities with NERD API.</b> 
+                     </br>This process may take a few minutes...
+                     </br></br><img src="{{ asset('img/chargement.gif') }}" alt="chargement"/>
+                </div>
+        </div>
+        
+   
+     <div class="panel panel-primary">
+    <div class="panel-heading">Text analyzis with NERD API</div>
+        <div class="panel-body">
+     <form role="form" action="{{ path('analyze_text') }}" name="analyze" method="post" >
+        <div class="form-group">
+          <label>Choose a filename to save your text:</label>
+          {{ form_widget(form.filename,{'id': 'filename'}) }}
+        </div>
+        <div class="form-group">
+          <label>Choose a named entity extractor to analyze your text:</label>
+          {{ form_widget(form.extractor,{'id': 'extractor'}) }}
+        </div>
+        <div class="form-group">
+          <label for="textanalyze">Input plain text:</label>
+          {{ form_widget(form.plaintext, { 'id': 'plaintext','attr': {'rows':20} }) }}
+        </div>
+           {{ form_widget(form.submit) }}
+            {{ form_errors(form) }}
+            {{ form_rest(form) }}
+      </form>
+      	  
+      </div>
+      {# footer de panel #}
+      <div class="panel-footer">
+                <p>
+                  <span class="fa fa-info-circle"></span> <i>Nota Bene:</i>
+                        <ul>
+                          <li>
+                              The analyze process may take a few minutes with a long text.
+                          </li>
+                          <li>
+                              The text to analyze is limited to 4770 characters.
+                          </li>
+                           <li>
+                               The combined extractor's strategy enables to launch all extractors while having a conflict resolution mechanism (<a href="http://nerd.eurecom.fr/" target="_blank">more details</a>).
+                          </li>
+                        </ul>      
+                </p>
+             
+      </div>
+ </div>
+      {% endblock %}
+    
+    {% block javascripts %}
+    <script language="javascript" type="text/javascript">
+      function analyzeText()
+         {
+             var name=$("#filename").val();
+             var extractor=$("#extractor").val();
+             var text=$("#plaintext").val();
+                 
+                 var temp = new Array();
+                 temp=text.split('&');
+             var DATA ="donne="+name+":"+extractor+":"+temp; 
+             var path="{{ path('analyze_text_nerd') }}";
+             $.ajax({
+                dataType: "json",
+                type: "POST",
+                url: path,
+                data: DATA,
+                beforeSend: function()
+                {
+                document.getElementById("loading-indicator").style.display = "block";
+                },
+                success: function(response)
+                {
+                  document.getElementById("loading-indicator").style.display = "none";
+                   if(response.validResponse === 0){
+                        
+                      $("#analyzeFileExistModal").modal();
+                      $("#analyzeModal").modal('hide');
+                    //  $("#analyzeFileExistModal").modal('hide');
+                    // alert("Error! The filename already exists");
+                   }
+                    else if(response.validResponse === 1){
+
+                        $("#analyzeNERDErrorModal").modal();
+                        // alert("Error with NERD Service! Please repeat this analyze later.");
+                    } else if(response.validResponse === 2){
+                      $("#analyzeModal").modal();
+                    }
+                     },
+                 error: function (xhr, status, errorThrown){
+                      document.getElementById("loading-indicator").style.display = "none";
+                         alert("Analyze error from server!");
+                   }
+                 });
+           }
+           var submitButton = document.querySelector("#btnAnalyze");
+          //ajouter l'evenement click sur le boutton analyze
+          submitButton.addEventListener("click", function(e) {
+              analyzeText();
+            });
+          
+    </script>
+    {% endblock %}

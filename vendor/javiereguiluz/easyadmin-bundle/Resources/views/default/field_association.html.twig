@@ -1,0 +1,35 @@
+{# a *-to-many collection of values #}
+{% if value is iterable %}
+    {% if 'show' == view %}
+        {% if value|length > 0 %}
+            {% if value | length < 15 %}
+                <ul class="{{ value|length < 2 ? 'inline' }}">
+                    {% for item in value %}
+                        <li>
+                            {% if link_parameters is defined %}
+                                {% set primary_key_value = attribute(item, link_parameters.primary_key_name) %}
+                                <a href="{{ path('easyadmin', link_parameters|merge({ id: primary_key_value, referer: '' })) }}">{{ item }}</a>
+                            {% else %}
+                                {{ item }}
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                {# Don't use list for large assoc. #}
+                <span class="badge">{{ value|length }}</span>
+            {% endif %}
+        {% else %}
+            <div class="empty collection-empty">
+                <span class="label label-empty">{{ 'label.empty'|trans({}, 'EasyAdminBundle') }}</span>
+            </div>
+        {% endif %}
+    {% elseif 'list' == view %}
+        <span class="badge">{{ value|length }}</span>
+    {% endif %}
+{# a simple *-to-one value associated with an entity managed by this backend #}
+{% elseif link_parameters is defined %}
+    <a href="{{ path('easyadmin', link_parameters|merge({ referer: '' })) }}">{{ value|easyadmin_truncate }}</a>
+{% else %}
+    {{ value|easyadmin_truncate }}
+{% endif %}

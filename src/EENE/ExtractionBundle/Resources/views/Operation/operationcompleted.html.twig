@@ -1,0 +1,18 @@
+{% extends "UserBundle::layout.html.twig" %}
+{% block title %}Completed operation{% endblock %}
+{% block eene_user_content %}
+    <div class="panel panel-primary">
+          <div class="panel-heading">Log file details</div>
+            <div class="panel-body">
+               <div id="analysiscontent">
+                   
+                   {% for value in textContent|split('\n') %}
+                      {{value}}<br/>
+                   {%endfor%}
+                </div>
+            </div>
+     </div>
+{% endblock %}
+{% block javascripts %}
+{% endblock %}
+

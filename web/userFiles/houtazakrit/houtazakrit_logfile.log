@@ -1,0 +1,99 @@
+At 2016-09-20 00:08:27
+Username: houtazakrit
+Extractor: combined
+Created Entity(ies)
+
+Create Entity with Id: 7623, Label: sommeil
+Create Entity with Id: 7624, Label: lune
+Create Entity with Id: 7625, Label: famille
+Create Entity with Id: 7626, Label: Immanente
+Create Entity with Id: 7627, Label: nez
+Create Entity with Id: 7628, Label: orage
+Create Entity with Id: 7629, Label: vin
+Create Entity with Id: 7630, Label: fenêtre
+Create Entity with Id: 7631, Label: glace
+Create Entity with Id: 7632, Label: neige
+Create Entity with Id: 7633, Label: franchise
+Create Entity with Id: 7634, Label: pantalon
+Create Entity with Id: 7635, Label: pantalon
+Create Entity with Id: 7636, Label: bonheur
+Create Entity with Id: 7637, Label: Coma
+Create Entity with Id: 7638, Label: tiers état
+Create Entity with Id: 7639, Label: perron
+Create Entity with Id: 7640, Label: hein
+Create Entity with Id: 7641, Label: contradiction
+Create Entity with Id: 7642, Label: chevalier
+Create Entity with Id: 7643, Label: esclave
+Create Entity with Id: 7644, Label: apologie
+Create Entity with Id: 7645, Label: argent
+Create Entity with Id: 7646, Label: bois
+Create Entity with Id: 7647, Label: signal de détresse
+Create Entity with Id: 7648, Label: univers
+Create Entity with Id: 7649, Label: grotte
+Create Entity with Id: 7650, Label: fer à cheval
+Create Entity with Id: 7651, Label: plaine
+Create Entity with Id: 7652, Label: cendre
+Create Entity with Id: 7653, Label: Bêtises
+Create Entity with Id: 7654, Label: duel
+Create Entity with Id: 7655, Label: science
+Create Entity with Id: 7656, Label: foi
+Create Entity with Id: 7657, Label: orbite
+Create Entity with Id: 7658, Label: cuivre
+Create Entity with Id: 7659, Label: courage
+Create Entity with Id: 7660, Label: héros
+Create Entity with Id: 7661, Label: diable
+Create Entity with Id: 7662, Label: sarde
+Create Entity with Id: 7663, Label: Rêve
+Create Entity with Id: 7664, Label: sangsue
+Create Entity with Id: 7665, Label: gauche
+Create Entity with Id: 7666, Label: conscience
+Create Entity with Id: 7667, Label: lumière
+Create Entity with Id: 7668, Label: yeux
+Create Entity with Id: 7669, Label: argent
+Create Entity with Id: 7670, Label: dogme
+Create Entity with Id: 7671, Label: hyperespace
+Create Entity with Id: 7672, Label: rapace
+Create Entity with Id: 7673, Label: Diable
+Create Entity with Id: 7674, Label: la maison
+Create Entity with Id: 7675, Label: velours
+Create Entity with Id: 7676, Label: soie
+Create Entity with Id: 7677, Label: pourpre
+Create Entity with Id: 7678, Label: cerveau
+Create Entity with Id: 7679, Label: rêve
+Create Entity with Id: 7680, Label: taureau
+Create Entity with Id: 7681, Label: Prison
+Create Entity with Id: 7682, Label: prison
+Create Entity with Id: 7683, Label: arènes
+Create Entity with Id: 7684, Label: lions
+Create Entity with Id: 7685, Label: Abus de confiance
+Create Entity with Id: 7686, Label: rage
+Create Entity with Id: 7687, Label: nouvelles
+Create Entity with Id: 7688, Label: droit public
+Create Entity with Id: 7689, Label: la monnaie
+Create Entity with Id: 7690, Label: chien
+
+Geolocating Entity(ies)
+
+Entity Id: 7674
+Trying to geolocate: la maison
+NERD type: Location
+Extractor: alchemyapi
+Text position: 6610
+URI: Not defined
+Calling Geonames... Response: POINT(5.85 49.51667)
+
+Entity Id: 7683
+Trying to geolocate: arènes
+NERD type: Location
+Extractor: textrazor
+Text position: 7677
+URI: http://fr.wikipedia.org/wiki/Arène
+Calling Geonames... Response: POINT(20.91667 40.3)
+
+Entity Id: 7689
+Trying to geolocate: la monnaie
+NERD type: Location
+Extractor: textrazor
+Text position: 8289
+URI: http://fr.wikipedia.org/wiki/La_Monnaie
+Calling Geonames... Response: POINT(4.35389 50.8497)

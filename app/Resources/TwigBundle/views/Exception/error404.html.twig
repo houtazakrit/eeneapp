@@ -1,0 +1,21 @@
+{# app/Resources/TwigBundle/views/Exception/error404.html.twig #}
+{% block title %}Page not found{% endblock %}
+{% extends "::base.html.twig" %}
+
+ {% block eene_user_content %}
+ 	<div class="row">
+			<div class="col-md-8 col-md-offset-4">
+            <h1>Page not found</h1>
+            <p></p>
+            <p></p>
+        
+            <p>
+                The page you are looking for does not exist. Checkout for any URL
+                misspelling or <a href="{{ path('user_login') }}">return to the homepage</a>.
+            </p>
+             <p></p>
+            <p></p>
+    
+    </div>
+    </div>
+{% endblock %}

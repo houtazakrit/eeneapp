@@ -1,0 +1,18 @@
+{# app/Resources/TwigBundle/views/Exception/error.html.twig #}
+{% block title %}Page error{% endblock %}
+{% extends "::base.html.twig" %}
+
+ {% block eene_user_content %}
+ 	<div class="row">
+			<div class="col-md-8 col-md-offset-4">
+            <h1>Page error</h1>
+            <p></p>
+            <p></p>
+              <p>   Checkout for any URL
+                misspelling or <a href="{{ path('user_login') }}">return to the homepage</a>.
+            </p>
+            <p></p>
+            <p></p>
+        </div>
+    </div>
+{% endblock %}

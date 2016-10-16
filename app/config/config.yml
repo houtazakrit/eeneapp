@@ -1,0 +1,141 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+    - { resource: admin.yml } #config of admin
+    - { resource: "@UserBundle/Resources/config/services.yml" }
+    - { resource: "@ExtractionBundle/Resources/config/services.yml" }
+    - { resource: "@VisualizationBundle/Resources/config/services.yml" }
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: en
+framework:
+    #esi:             ~
+    translator: { fallbacks: [en] }
+    #translator: { fallback: en }
+    secret:          "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    #serializer:      { enable_annotations: true }
+    templating:
+        engines: ['twig']
+    default_locale:  en
+    trusted_hosts:   ~
+    trusted_proxies: ~
+    session:
+        # handler_id set to null will use default session handler from php.ini
+        gc_probability: 0
+    fragments:       ~
+    http_method_override: true
+
+# Twig Configuration
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+    form:
+        #resources: ['bootstrap_3_layout.html.twig']
+        resources: ['bootstrap_3_horizontal_layout.html.twig']
+   # appel controller Exception de twigBundle pour gerer pages derreur
+    exception_controller:  twig.controller.exception:showAction
+    # les variables globales
+    globals:
+        userdirectory: userFiles    #variable dossier des fichiers userdirectory
+        nerdkey: '19802ud303fg8uciu7jt0sm8m5s9ag7f'    #variable clé de NERD API
+       # variables pour les couleurs utilisés de visualisation 
+        thingcolor: '#bff347' 
+        locationcolor: '#cbaeff'
+        timecolor: '#fafd8a'
+        eventcolor: '#fac9fa'
+        functioncolor: '#d8d8d8'
+        productcolor: '#82dd80'
+        amountcolor: '#f39a98'
+        personcolor: '#cff2ce'
+        organizationcolor: '#fdf0c9'
+        animalcolor: '#f9d159'
+    date:
+        # ...
+        timezone: Europe/Paris #zone horaire pour les dates
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   pdo_mysql
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
+        charset:  UTF8
+        types: #types de librairie gestion coordonnées spatials CREOf
+            geometry:   CrEOF\Spatial\DBAL\Types\GeometryType
+            point:      CrEOF\Spatial\DBAL\Types\Geometry\PointType
+            polygon:    CrEOF\Spatial\DBAL\Types\Geometry\PolygonType
+            linestring: CrEOF\Spatial\DBAL\Types\Geometry\LineStringType
+    orm:
+        auto_generate_proxy_classes: false
+        auto_mapping: true
+        dql:
+            numeric_functions:
+                numeric_functions: #fonctions de librairie gestion coordonnées spatials CREOf
+                st_contains:     CrEOF\Spatial\ORM\Query\AST\Functions\MySql\STContains
+                contains:     CrEOF\Spatial\ORM\Query\AST\Functions\MySql\Contains
+                st_area:         CrEOF\Spatial\ORM\Query\AST\Functions\MySql\Area
+                st_geomfromtext: CrEOF\Spatial\ORM\Query\AST\Functions\MySql\GeomFromText
+                st_intersects:     CrEOF\Spatial\ORM\Query\AST\Functions\MySql\STIntersects
+                st_buffer:     CrEOF\Spatial\ORM\Query\AST\Functions\MySql\STBuffer
+                point: CrEOF\Spatial\ORM\Query\AST\Functions\MySql\Point
+#configuration of fosuser
+fos_user:
+    db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
+    firewall_name: main
+    user_class: EENE\UserBundle\Entity\User
+    registration:
+        confirmation:
+            enabled:    true # change to false to disable registration email confirmation  
+            template:   UserBundle:Registration:email.txt.twig   
+            from_email: 
+                address:        noreply.eene@gmail.com
+                sender_name:    noreply 
+        form:
+            type: EENE\UserBundle\Form\RegistrationType
+    resetting:
+        token_ttl: 0
+        email:
+            from_email:
+                address:    eene.univ.pau@gmail.com
+                sender_name:    noreply
+        form:
+            type:                 fos_user_resetting
+            name:                 fos_user_resetting_form
+            validation_groups:
+                # Defaults:
+                - ResetPassword
+                - Default
+    from_email:
+        address: noreply.eene@gmail.com
+        sender_name: noreply
+    profile:
+        form:
+            type: eene_user_profile  
+    change_password:
+        form:
+            type:                 fos_user_change_password
+            name:                 fos_user_change_password_form
+            validation_groups:
+                # Defaults:
+                - ChangePassword
+                - Default
+    service:
+            mailer: fos_user.mailer.twig_swift #gestion email swiftmailer fos user
+     #   type: uploader
+     #email configuration in parameters.yml
+swiftmailer:
+    transport: '%mailer_transport%'
+    host:      '%mailer_host%'
+    username:  '%mailer_user%'
+    password:  '%mailer_password%'

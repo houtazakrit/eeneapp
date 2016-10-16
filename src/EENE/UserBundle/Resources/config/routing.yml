@@ -1,0 +1,31 @@
+user_user:
+    resource: "@UserBundle/Resources/config/routing/user.yml"
+    prefix:   /home/user
+user_login:
+    path:     /login
+    defaults: { _controller: UserBundle:Login:index }
+user_delete:
+    path:     /home/deleteUser
+    defaults: { _controller: UserBundle:DeleteUser:deleteUser }
+eene_contact:
+    path:     /contact
+    defaults: { _controller: UserBundle:Contact:contact }
+eene_contributor:
+    path:     /contributor
+    defaults: { _controller: UserBundle:Contact:contributor } 
+eene_help:
+    path:     /help
+    defaults: { _controller: UserBundle:Help:help } 
+eene_help_consult:
+    path:     /help/{videoname}
+    defaults: { _controller: UserBundle:Help:consult }
+
+
+
+
+   
+    
+    
+    
+    
+    

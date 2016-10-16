@@ -1,0 +1,49 @@
+{# tester si l'utilisateur est connecté #}
+{% extends app.user 
+    ? "UserBundle::layout.html.twig" 
+    : "::base.html.twig" %}
+{% block title %}Help{% endblock %}
+{% block eene_user_content %}
+    <div class="row">
+                  		<div class="col-md-offset-2 col-md-8">
+            			  	 <div class="panel panel-primary" >
+            					  <div class="panel-heading">Help</div>
+            					    <div class="panel-body">
+
+            					         {%  if not app.user %}
+            					           <center> 
+            					             <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}
+            					             </a>
+            					            </center>
+            					         {%  endif %}
+            					         <h5><b>Demo videos :</b> </h5>
+
+                                          <p>
+                                              This <a href="{{ path('eene_help_consult',{'videoname':'analyze'}) }}">video</a> shows how to extract names entities from a text. </br> 
+                                          </p>
+                                          <p>
+                                             This <a href="{{ path('eene_help_consult',{'videoname':'visualization'}) }}">video</a> shows how extracted entities can be visualized on the text and on a map when it deals with spatial entities.</br>
+                                          </p>
+                                          <p>
+                                              This <a href="{{ path('eene_help_consult',{'videoname':'upload'}) }}">video</a> shows how to upload a text and its extracted entities (previously encoded with <a href="http://nerd.eurecom.fr/" target="_blank">NERD tool</a>).</br> 
+
+                                          </p>
+                                           <p>
+                                             This <a href="{{ path('eene_help_consult',{'videoname':'geocodeentities'}) }}">video</a> shows how to geolocate spatial entities that are not geocoded. This function can be used when geocoding services (Geonames, DBpedia and/or Google Maps) were momentaly out of order.</br>
+                                          </p>
+                                             <p>
+                                             This <a href="{{ path('eene_help_consult',{'videoname':'deletefile'}) }}">video</a> shows how to delete a text file and its corresponding extracted entites. </br>
+                                          </p>
+                                        {% if is_granted("ROLE_ADMIN") %}
+                                            <p>
+                                                  Following demon video explaining how an administrator add a user. </br> 
+                                                  The same procedure applies to modify a user.</br>
+                                              <a href="{{ path('eene_help_consult',{'videoname':'adduser'}) }}">Add user</a>
+                                            </p>
+                                        {% endif %}
+                                         
+             </div>
+         </div>
+         </div>
+    </div>
+{% endblock %}

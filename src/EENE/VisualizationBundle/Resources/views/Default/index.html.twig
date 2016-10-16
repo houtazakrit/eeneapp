@@ -1,0 +1,55 @@
+{% extends "UserBundle::layout.html.twig" %}
+{% block title %}Visualization{% endblock %}
+    {% block eene_user_content %}
+	 <div class="row">
+      <div class="panel panel-primary">
+       <div class="panel-heading">
+       	{% if tablevisucontent[0].nerdFile.name is not defined %}'No entities'{% else %}'{{tablevisucontent[0].nerdFile.name}}'{% endif%}  visualization</div>
+             <div class="panel-body">
+             	 <div class="row" style="margin-left:10px">
+					          	<h4>Legend (Named Entities)</h4>
+					          	{#get back ground colors from config.yml #}
+					          	<span style="background-color:{{visuColors['location']}}">Location</span>
+					          	<span style="background-color:{{visuColors['time']}}">Temporal</span>
+					          	<span style="background-color:{{visuColors['animal']}}">Animal</span>
+					          	<span style="background-color:{{visuColors['thing']}}">Thing</span>
+					          	<span style="background-color:{{visuColors['amount']}}">Amount</span>
+					          	<span style="background-color:{{visuColors['organization']}}">Organization</span>
+					          	<span style="background-color:{{visuColors['person']}}">Person</span>
+					          	<span style="background-color:{{visuColors['product']}}">Product</span>
+					          	<span style="background-color:{{visuColors['event']}}">Event</span>
+					          	<span style="background-color:{{visuColors['function']}}">Function</span>
+			          </div>
+			          <br/>
+				 	<div class="row">
+				 		{% if textcontent!=null %}
+				 	
+						       <div class="col-md-6 col-xs-6">
+						          
+						          <p id="contenttextfile">{{textcontent}}</p>
+						       </div>
+					            <div class="col-md-6 col-xs-6">
+					    	        <div id="map"></div>
+					            </div>
+					         
+					        {% else %}
+					            <div class="col-sm-12" >
+					    	      <div id="map"></div>
+					            </div>
+						 {% endif%}
+						 {% block javascripts %}
+							  {% include "VisualizationBundle:Default:map_text_content.html.twig" %}
+					     {% endblock %}
+				     </div>
+			     	<div class="row">
+			     		<div id="detailsentity"></div>
+			     	</div>
+				    
+				</div>
+		    </div>
+	    </div>
+
+	</div>
+	   
+  </div>
+  {% endblock %}

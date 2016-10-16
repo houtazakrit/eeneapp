@@ -1,0 +1,73 @@
+/*
+* les styles personalisés de l'application EENE
+*
+*/
+  .form-horizontal {
+     float:center;
+  }
+  .control-label{
+     text-align:left !important; 
+     margin-left:150px;
+     width:190px;
+  }
+#tablefiles .glyphicon-trash{
+     color:red;
+}
+#loading-indicator {
+      position: absolute;
+      left:0;
+      top:0;
+      bottom:0;
+      margin:0;
+       text-align: center;
+        color: white;
+       width: 100%;
+       height: 1000px;
+        min-height: 100%;
+      z-index: 9999;
+       font-weight: bold;
+      background-color: rgba(0, 0, 0, 0.5);
+}
+#textloading{
+      left:35%;
+      top:25%;
+      position: absolute;
+}
+
+#tablefiles{
+    width:100%;
+}
+.footer{
+  margin-top: 30px;
+   margin-bottom: 40px;
+}
+.container-login{
+    margin-top:10px;
+    margin-bottom:20px;
+    margin-right:10px;
+    padding:10px;
+    height: 210px;
+}
+
+#contenttextfile{
+ overflow: scroll;
+  height: 700px;
+}
+/* concerne la page d'analyse le texte qui affiche le résultat de NERD  */
+#analysiscontent{
+     overflow: scroll;
+     height: 600px;
+    margin-top:10px;
+    margin-bottom:20px;
+    margin-right:10px;
+}
+#map{
+  height: 700px;
+}
+.textarea_analyze {
+    width: 700px;
+    height: 800px;
+}
+
+
+
